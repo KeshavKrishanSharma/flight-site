@@ -7,10 +7,7 @@ const Loader = () => {
         <div className="spinner-border" role="status"></div>
       </div>
      
-      <div >
-        <img className="spinner-img " src="https://i0.wp.com/alistapart.com/wp-content/uploads/2013/01/ALA322_doodles_300.png?fit=1200%2C408&ssl=1">
-        </img>
-      </div>
+      
      
     </div>
   );

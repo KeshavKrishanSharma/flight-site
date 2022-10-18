@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import AdminHome from "./pages/Admin/AdminHome";
 import AdminUsers from "./pages/Admin/AdminUsers";
 import AdminFlights from "./pages/Admin/AdminFlights";
+import BookNow from "./pages/BookNow";
 
 function App() {
   const { loading } = useSelector((state) => state.alerts);
@@ -24,6 +25,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Home />{" "}
+              </ProtectedRoute>
+            }
+          />
+           <Route
+            path="/book-now/:id"
+            element={
+              <ProtectedRoute>
+                <BookNow />{" "}
               </ProtectedRoute>
             }
           />

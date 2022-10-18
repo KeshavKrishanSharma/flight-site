@@ -98,24 +98,22 @@ a{
 
 /* spinner/loader */
 
-.spinner-img{
-    position: center;
-    width: 50vw;
-    height: auto;
-}
 
-
-
-.spinner-img{
+.spinner-main {
     position: absolute;
-   
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 100;
-    width: 100vw;
-
-}
-.spinner-text{
-    z-index: 200;
-}
+    background-color: rgba(0, 0, 0, 0.507);
+    z-index: 10000;
+  }
+  .spinner-border {
+    color: white !important;
+    height: 80px !important;
+    width: 80px !important;
+  }
+  
