@@ -95,3 +95,27 @@ a{
     text-decoration: none !important;
 }
 
+
+/* spinner/loader */
+
+.spinner-img{
+    position: center;
+    width: 50vw;
+    height: auto;
+}
+
+
+
+.spinner-img{
+    position: absolute;
+   
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    width: 100vw;
+
+}
+.spinner-text{
+    z-index: 200;
+}

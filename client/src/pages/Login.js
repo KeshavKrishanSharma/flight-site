@@ -2,21 +2,28 @@ import React from "react";
 import { Form, message } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { HideLoading, ShowLoading } from "../redux/alertsSlice";
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const onFinish = async (values) => {
     try {
+      dispatch(ShowLoading());
       const response = await axios.post("/api/users/login", values);
+      dispatch(HideLoading());
       if (response.data.success) {
         message.success(response.data.message);
         localStorage.setItem("token", response.data.data);
         navigate("/");
       } else {
-        message.error("error in els");
+        message.error(response.data.message);
       }
     } catch (error) {
-      message.error("error in catch");
+      dispatch(HideLoading());
+      message.error(error.message);
+      
     }
   };
   return (

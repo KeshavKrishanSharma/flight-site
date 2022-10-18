@@ -1,0 +1,105 @@
+.layout-parent {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  height: 100vh;
+
+  overflow-x: hidden !important;
+}
+
+.body {
+  width: 100%;
+}
+.header {
+  width: 100%;
+  padding: 25px;
+}
+
+.sidebar {
+  border-radius: 5px;
+  display: flex;
+  justify-content: start;
+
+
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0px 10px 10px;
+}
+.logo {
+
+}
+.role {
+  color: rgb(5, 5, 5);
+  font-size: 16px;
+}
+.menu {
+  margin-top: 150px;
+}
+.menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+
+  width: 100%;
+  cursor: pointer;
+  transition: 0.2s;
+ 
+ 
+}
+
+
+.menu-item i {
+  font-size: 20px;
+  margin-right: 10px;
+  color: rgb(129, 25, 112);
+  background-color: rgb(241, 213, 248);
+  border-radius: 40px;
+
+  padding: 10px;
+}
+
+.menu-item span {
+  color: rgb(15, 15, 15);
+  font-size: 16px;
+  
+}
+.content {
+  padding: 10px 0px;
+  overflow-y: scroll !important;
+  overflow-x: hidden !important;
+  height: 85vh;
+}
+
+
+
+#aa:hover {
+  /* Start the shake animation and make the animation last for 0.5 seconds */
+  animation: shake 0.5s;
+
+  /* When the animation is finished, start again */
+  animation-iteration-count: 1;
+}
+
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+i{
+  font-size: 30px;
+  cursor: pointer;
+}
+
+#bb{
+height: 50px;
+
+}
