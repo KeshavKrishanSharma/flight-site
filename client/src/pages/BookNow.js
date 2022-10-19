@@ -2,10 +2,12 @@ import { Col, message, Row } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-
+import BookingBtn from "../components/BookingBtn";
+import StripeCheckout from "react-stripe-checkout";
 import { axiosInstance } from "../helpers/axiosInstance";
 import { HideLoading, ShowLoading } from "../redux/alertsSlice";
 import "../resources/bookBtn.css";
+
 const BookNow = () => {
   const [selectedSeats, setSelectedSeats] = useState([]);
   const params = useParams();
@@ -59,7 +61,7 @@ const BookNow = () => {
       dispatch(ShowLoading());
       const response = await axiosInstance.post("/api/bookings/make-payment", {
         token,
-        amount: selectedSeats.length * flight.fare * 100,
+      
       });
       dispatch(HideLoading());
       if (response.data.success) {
@@ -106,12 +108,14 @@ const BookNow = () => {
                 </div>
                 <div className="col-md-6">
                   <div className="aa pt-5 mt-5">
-                    <div class="wrapper">
-                      <a class="cta" href="#">
-                        <span>Confirm To Book</span>
-                        <span></span>
-                      </a>
-                    </div>
+                    <StripeCheckout
+                    billingAddress
+                    amount={flight.fare * 100 *72 }
+                      token={onToken}
+                      stripeKey="pk_test_51LuVcJSHdyqA6XMo5uKqKKShd647uI5L6aKFCqjkxKBREsVD4RaMR5MbzC81HNkB9SU3PiDNfuhnCiqcVeK6QE6n00ES1Cix6i"
+                    >
+                      <BookingBtn />
+                    </StripeCheckout>
                   </div>
                 </div>
               </div>
