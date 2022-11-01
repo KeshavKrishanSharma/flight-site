@@ -6,7 +6,7 @@ const authMiddleware = require("../middlewares/authMiddleware");
 
 // register new user
 
-router.post("/register", async (req, res) => {
+router.post("/register",async (req, res) => {
   try {
     const existingUser = await User.findOne({ email: req.body.email });
     if (existingUser) {

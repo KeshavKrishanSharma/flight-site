@@ -1,6 +1,39 @@
 
 const router = require("express").Router();
 const authMiddleware = require("../middlewares/authMiddleware");
+const Booking = require("../models/bookingModel")
+const Flight = require("../models/flightModel")
+
+
+// book a seat
+
+router.post("/book-seat", authMiddleware, async (req, res) => {
+  try {
+    const newBooking = new Booking({
+      ...req.body,
+      user: req.body.userId,
+    });
+    await newBooking.save();
+    const flight = await Flight.findById(req.body.flight);
+    flight.seatsBooked = [...flight.seatsBooked, ...req.body.seats];
+    await flight.save();
+    res.status(200).send({
+      message: "Booking successful",
+      data: newBooking,
+      success: true,
+    });
+  } catch (error) {
+    res.status(500).send({
+      message: "Booking failed",
+      data: error,
+      success: false,
+    });
+  }
+});
+
+
+
+
 
 // make payment
 
@@ -14,7 +47,7 @@ router.post("/make-payment", authMiddleware, async (req, res) => {
     const payment = await stripe.charges.create(
       {
         amount: amount,
-        success_url: "https://example.com/success",
+     
         currency: "inr",
         customer: customer.id,
         receipt_email: token.email,
@@ -49,3 +82,4 @@ router.post("/make-payment", authMiddleware, async (req, res) => {
   }
 });
 
+module.exports = router;
