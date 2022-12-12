@@ -3,8 +3,8 @@ const router = require("express").Router();
 const authMiddleware = require("../middlewares/authMiddleware");
 const Booking = require("../models/bookingModel")
 const Flight = require("../models/flightModel")
-
-
+const stripe = require("stripe")(process.env.stripe_key);
+const { v4: uuidv4 } = require("uuid");
 // book a seat
 
 router.post("/book-seat", authMiddleware, async (req, res) => {

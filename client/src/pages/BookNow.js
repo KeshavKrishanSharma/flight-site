@@ -8,6 +8,7 @@ import { HideLoading, ShowLoading } from "../redux/alertsSlice";
 import "../resources/bookBtn.css";
 import SeatSelection from "../components/SeatSelection";
 import "../resources/flightseat.css";
+import StripeCheckout from "react-stripe-checkout";
 
 const BookNow = () => {
   const [selectedSeats, setSelectedSeats] = useState([]);
@@ -18,9 +19,12 @@ const BookNow = () => {
   const getFlight = async () => {
     try {
       dispatch(ShowLoading());
-      const response = await axiosInstance.post("/api/flights/get-flight-by-id", {
-        _id: params.id,
-      });
+      const response = await axiosInstance.post(
+        "/api/flights/get-flight-by-id",
+        {
+          _id: params.id,
+        }
+      );
       dispatch(HideLoading());
       if (response.data.success) {
         setFlight(response.data.data);
@@ -32,14 +36,13 @@ const BookNow = () => {
       message.error(error.message);
     }
   };
-  
+
   const bookNow = async () => {
     try {
       dispatch(ShowLoading());
       const response = await axiosInstance.post("/api/bookings/book-seat", {
         flight: flight._id,
         seats: selectedSeats,
-        
       });
       dispatch(HideLoading());
       if (response.data.success) {
@@ -54,7 +57,25 @@ const BookNow = () => {
     }
   };
 
-  
+  const onToken = async (token) => {
+    try {
+      dispatch(ShowLoading());
+      const response = await axiosInstance.post("/api/bookings/make-payment", {
+        token,
+        amount: selectedSeats.length * flight.fare * 100,
+      });
+      dispatch(HideLoading());
+      if (response.data.success) {
+        message.success(response.data.message);
+        bookNow(response.data.data.transactionId);
+      } else {
+        message.error(response.data.message);
+      }
+    } catch (error) {
+      dispatch(HideLoading());
+      message.error(error.message);
+    }
+  };
   useEffect(() => {
     getFlight();
   }, []);
@@ -92,12 +113,11 @@ const BookNow = () => {
                     Fare : {flight.fare * selectedSeats.length} /-
                   </h1>
                 </div>
-               
               </div>
             </div>
 
             <hr />
-          </Col >
+          </Col>
           <Col lg={12} xs={24} sm={24}>
             <SeatSelection
               selectedSeats={selectedSeats}
@@ -105,21 +125,20 @@ const BookNow = () => {
               flight={flight}
             />
           </Col>
-          <Col lg={23} xs={24} sm={24}> 
-         
-                 
-                  
-                      <Button onClick={bookNow}
-         
-                      >
-                        <BookingBtn />
-                      </Button>
-                  
-               
-                
+          <Col lg={23} xs={24} sm={24}>
+            <StripeCheckout
+            currency="INR"
+            amount={flight.fare * selectedSeats.length }
+              token={onToken}
+              stripeKey="pk_test_51LuVcJSHdyqA6XMo5uKqKKShd647uI5L6aKFCqjkxKBREsVD4RaMR5MbzC81HNkB9SU3PiDNfuhnCiqcVeK6QE6n00ES1Cix6i"
+            >
+              <div onClick={bookNow}
+                 >
+                <BookingBtn />
+              </div>
+            </StripeCheckout>
           </Col>
         </Row>
-        
       )}
     </div>
   );
